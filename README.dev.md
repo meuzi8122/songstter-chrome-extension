@@ -4,15 +4,20 @@
 
 ### popup
 
-- 拡張機能ボタンを押した時に表示される UI
-- ページの DOM や URL にアクセスできない
+- 拡張機能ボタンを押した時に表示されるUI
+- ページのDOMやURL（location.href）にアクセスできない
+- 外部APIにアクセスするとcorsに引っかかる
 
-### content 　 script
+### content script
 
 - ページ読み込み時に実行される処理
-- ページの DOM や URL にアクセスできる
+- ページのDOMやURLにアクセスできる
+- 外部APIにアクセスするとcorsに引っかかる
+  - "https://www.songsterr.com/api/search?pattern=Trrrrrrrrrrrrrrrrrrrue+Lies' from origin 'https://www.youtube.com"
 
-### background
+### background (service worker)
+
+- 外部APIにアクセスしてもcorsに引っかからない
 
 ## その他アイデア
 

@@ -9,11 +9,16 @@ export default defineConfig({
     startUrls: ["https://www.youtube.com/watch?v=l9-E-7kRJes"],
   },
   manifest: {
+    background: {
+      service_worker: "background.ts",
+    },
     content_scripts: [
       {
         matches: ["https://www.youtube.com/watch?v=*"],
-        js: ["entrypoints/content.ts"],
+        js: ["entrypoints/content/index.ts"],
       },
     ],
+    // これがないとbackgroundもcorsに引っかかる
+    host_permissions: ["https://www.songsterr.com/api/*"],
   },
 });
