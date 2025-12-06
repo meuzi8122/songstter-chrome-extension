@@ -27,5 +27,8 @@
     "@tailwindcss/vite": "^4.1.17",
     "prettier-plugin-svelte": "^3.4.0",
     "tailwindcss": "^4.1.17"
+  },
+  "dependencies": {
+    "@webext-core/messaging": "^2.3.0"
   }
 }
