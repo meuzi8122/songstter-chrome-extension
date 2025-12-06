@@ -1,6 +1,12 @@
 export default defineContentScript({
-  matches: ['*://*.google.com/*'],
+  matches: ["https://www.youtube.com/watch?v=*"],
+  // runAt: "document_end",
   main() {
-    console.log('Hello content.');
+    new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
+      const title = document.getElementsByClassName(
+        "yt-video-attribute-view-model__title"
+      )[0]?.textContent;
+      console.log(title);
+    });
   },
 });
