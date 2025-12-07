@@ -7,7 +7,7 @@ export default defineConfig({
   modules: ["@wxt-dev/module-svelte"],
   runner: {
     // bun run devでブラウザを立ち上げた時に開くサイトのURL
-    startUrls: ["https://www.youtube.com/watch?v=l9-E-7kRJes"],
+    startUrls: ["https://www.youtube.com/watch?v=Fve_lHIPa-I"],
   },
   manifest: {
     background: {

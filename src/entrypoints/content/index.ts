@@ -2,6 +2,7 @@ import { mount, unmount } from "svelte";
 import TablatureList from "./TablatureList.svelte";
 import { sendMessage } from "@/lib/utils/messaging";
 import { ContentScriptContext } from "#imports";
+import { getFavoriteInstruments } from "@/lib/utils/local-storage";
 
 export default defineContentScript({
   // SPAでは最初に開いたページだけチェックされる
@@ -40,7 +41,11 @@ async function createUi(url: string, ctx: ContentScriptContext) {
   }
 
   // backgroudの処理を実行
-  const tablatures = await sendMessage("findTablatures", title);
+  // @ts-ignore
+  const tablatures = await sendMessage("findTablatures", {
+    title,
+    favoriteInstruments: getFavoriteInstruments(),
+  });
 
   return await createShadowRootUi(ctx, {
     // 識別子はケバブケースにしないとエラー
@@ -50,7 +55,7 @@ async function createUi(url: string, ctx: ContentScriptContext) {
     onMount: (container) => {
       return mount(TablatureList, {
         target: container,
-        props: { url, tablatures, title: title || "" },
+        props: { url, tablatures, title },
       });
     },
     onRemove: (app) => {

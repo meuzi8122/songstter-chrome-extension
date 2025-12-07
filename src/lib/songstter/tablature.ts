@@ -1,17 +1,15 @@
-export interface Tablature {
+export type Tablature = {
   id: number;
   title: string;
   artist: Artist;
   instruments: Instrument[];
-}
+};
 
-export interface Artist {
+export type Artist = {
   id: number;
   name: string;
-}
+};
 
-export interface Instrument {
-  id: number;
-  name: string;
-  // tuning: number[];
-}
+export type Instrument = (typeof INSTRUMENTS)[number];
+
+export const INSTRUMENTS = ["Guitar", "Bass"] as const;

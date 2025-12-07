@@ -1,8 +1,8 @@
 import { defineExtensionMessaging } from "@webext-core/messaging";
-import { Tablature } from "../songstter/tablature";
+import { Instrument, Tablature } from "../songstter/tablature";
 
 interface ProtocolMap {
-  findTablatures(title: string): Tablature[];
+  findTablatures(title: string, favoriteInstruments: Instrument[]): Tablature[];
 }
 
 export const { sendMessage, onMessage } =
