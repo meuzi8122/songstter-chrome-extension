@@ -1,5 +1,5 @@
 import { mount, unmount } from "svelte";
-import TablatureList from "./TablatureList.svelte";
+import Notification from "./Notification.svelte";
 import { sendMessage } from "@/lib/utils/messaging";
 import { ContentScriptContext } from "#imports";
 import { getFavoriteInstruments } from "@/lib/utils/local-storage";
@@ -49,11 +49,11 @@ async function createUi(url: string, ctx: ContentScriptContext) {
 
   return await createShadowRootUi(ctx, {
     // 識別子はケバブケースにしないとエラー
-    name: "tablature-list",
+    name: "tablature-search-notification",
     position: "overlay",
     anchor: "body",
     onMount: (container) => {
-      return mount(TablatureList, {
+      return mount(Notification, {
         target: container,
         props: { url, tablatures, title },
       });

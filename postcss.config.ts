@@ -2,8 +2,8 @@ module.exports = {
   plugins: {
     "@tailwindcss/postcss": {},
     "postcss-prefix-selector": {
-      // id="songstter-chrome-extension"とその子要素にだけスタイルを適用する（ページ全体にスタイルが適用されるのを防ぐ）
-      prefix: "#songstter-chrome-extension",
+      // class="songstter-chrome-extension"とその子要素にだけスタイルを適用する（ページ全体にスタイルが適用されるのを防ぐ）
+      prefix: ".songstter-chrome-extension",
       transform: transformSelector,
     },
     autoprefixer: {},
