@@ -14,7 +14,9 @@
 - ページのDOMやURLにアクセスできる
 - 外部APIにアクセスするとcorsに引っかかる
 
-`https://www.songsterr.com/api/search?pattern=Trrrrrrrrrrrrrrrrrrrue+Lies' from origin 'https://www.youtube.com"`
+```
+https://www.songsterr.com/api/search?pattern=Trrrrrrrrrrrrrrrrrrrue+Lies' from origin 'https://www.youtube.com"
+```
 
 ### background (service worker)
 
