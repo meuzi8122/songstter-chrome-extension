@@ -15,7 +15,7 @@ function getLocalStorageValue<T>(
   return { value: defaultValue, hasKey: false };
 }
 
-export function setLocalStorageValue<T>(key: string, value: T) {
+function setLocalStorageValue<T>(key: string, value: T) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
@@ -31,4 +31,8 @@ export function getFavoriteInstruments(): Instrument[] {
   }
 
   return value;
+}
+
+export function setFavoriteInstruments(instruments: Instrument[]) {
+  setLocalStorageValue<Instrument[]>(FAVORITE_INSTRUMENT_KEY, instruments);
 }
