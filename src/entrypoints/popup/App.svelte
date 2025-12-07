@@ -1,42 +1,38 @@
 <script lang="ts">
-  import svelteLogo from '../../assets/svelte.svg'
-  import Counter from '../../lib/Counter.svelte'
+  import {
+    getFavoriteInstruments,
+    setFavoriteInstruments,
+  } from "@/lib/utils/local-storage";
+
+  // onMountで初期化するとeffectが呼ばれてしまうのでダメ
+  let favoriteInstruments = $state(getFavoriteInstruments());
+
+  $effect(() => {
+    setFavoriteInstruments(favoriteInstruments);
+  });
 </script>
 
-<main>
+<main class="p-1">
+  <h1 class="text-base font-bold mb-1">検索設定</h1>
   <div>
-    <a href="https://wxt.dev" target="_blank" rel="noreferrer">
-      <img src="/wxt.svg" class="logo" alt="WXT Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+    <fieldset
+      class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4"
+    >
+      <legend class="fieldset-legend">以下の楽器のTAB譜を検索</legend>
+      <div class="flex flex-col space-y-2">
+        {#each [{ name: "Guitar", label: "ギター" }, { name: "Bass", label: "ベース（4弦・5弦）" }] as instrument}
+          <label class="label flex justify-between">
+            {instrument.label}
+            <input
+              type="checkbox"
+              checked={true}
+              class="toggle toggle-sm checked:toggle-primary"
+              value={instrument.name}
+              bind:group={favoriteInstruments}
+            />
+          </label>
+        {/each}
+      </div>
+    </fieldset>
   </div>
-  <h1>WXT + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p class="read-the-docs">
-    Click on the WXT and Svelte logos to learn more
-  </p>
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #54bc4ae0);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
