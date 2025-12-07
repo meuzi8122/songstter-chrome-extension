@@ -4,9 +4,11 @@ import { sendMessage } from "@/lib/utils/messaging";
 import { ContentScriptContext } from "#imports";
 import { getFavoriteInstruments } from "@/lib/utils/local-storage";
 
+const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
+
 export default defineContentScript({
   // SPAでは最初に開いたページだけチェックされる
-  matches: ["https://www.youtube.com/watch?v=*"],
+  matches: [`${YOUTUBE_WATCH_URL}*`],
   cssInjectionMode: "ui",
   async main(ctx) {
     let ui: Awaited<ReturnType<typeof createShadowRootUi>> | null =
@@ -19,7 +21,7 @@ export default defineContentScript({
     ctx.addEventListener(window, "wxt:locationchange", async ({ newUrl }) => {
       // 古いUIが残ったままになるのでアンマウント
       ui?.remove();
-      if (newUrl.href.startsWith("https://www.youtube.com/watch?v=")) {
+      if (newUrl.href.startsWith(YOUTUBE_WATCH_URL)) {
         ui = await createUi(newUrl.href, ctx);
         ui?.mount();
       }
