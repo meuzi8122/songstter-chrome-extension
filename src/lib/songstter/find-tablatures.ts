@@ -9,5 +9,9 @@ export async function findTablatures(pattern: string) {
       id: record.artistId,
       name: record.artist,
     },
+    intstruments: record.tracks.map((track: any) => ({
+      id: track.instrumentId,
+      name: track.instrument,
+    })),
   }));
 }
