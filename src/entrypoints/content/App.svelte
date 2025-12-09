@@ -9,11 +9,11 @@
 
 <!-- シャドウDOMのルート要素にマージンを指定しても効かない（親の実DOMに影響を与えない） -->
 <div class="songstter-chrome-extension">
-  <div class="flex items-center justify-between mt-6 mb-6">
+  <div class="flex items-center justify-between mt-4 mb-4">
     <span
       >{hasTablatures
-        ? `この楽曲のTAB譜が投稿されています`
-        : "この楽曲のTAB譜は投稿されていません"}</span
+        ? `songstterにこの楽曲のTAB譜が投稿されています`
+        : "songstterにこの楽曲のTAB譜は投稿されていません"}</span
     >
     <button class="btn btn-primary btn-xl" onclick={handleButtonClick}>
       <svg
