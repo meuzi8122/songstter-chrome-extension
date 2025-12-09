@@ -1,4 +1,4 @@
-import { Instrument } from "../songstter/tablature";
+import { Instrument } from "../clients/songstter/tablature";
 
 export const FAVORITE_INSTRUMENT_KEY = "favoriteInstruments";
 

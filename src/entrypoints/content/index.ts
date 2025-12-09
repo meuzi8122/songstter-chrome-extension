@@ -2,7 +2,7 @@ import { mount, unmount } from "svelte";
 import App from "./App.svelte";
 import { sendMessage } from "@/lib/utils/messaging";
 import { ContentScriptContext } from "#imports";
-import { getFavoriteInstruments } from "@/lib/utils/local-storage";
+import { getFavoriteInstruments } from "@/lib/utils/localstorage";
 
 const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
 
