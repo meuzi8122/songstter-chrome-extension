@@ -74,7 +74,9 @@ async function handleLocationChange(url: string, ctx: ContentScriptContext) {
                 "_blank"
               );
             } else {
-              alert("TAB譜作成機能は今後実装予定です");
+              navigator.clipboard.writeText(url);
+              alert("動画URLをクリップボードにコピーしました");
+              window.open("https://www.songsterr.com/new", "_blank");
             }
           },
         },
