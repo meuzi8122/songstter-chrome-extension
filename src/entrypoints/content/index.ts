@@ -1,10 +1,14 @@
 import { mount, unmount } from "svelte";
-import Notification from "./Notification.svelte";
+import App from "./App.svelte";
 import { sendMessage } from "@/lib/utils/messaging";
 import { ContentScriptContext } from "#imports";
 import { getFavoriteInstruments } from "@/lib/utils/local-storage";
 
 const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
+
+const METADATA_SELECTOR = "#above-the-fold.style-scope.ytd-watch-metadata";
+const SONG_TITLE_SELECTOR = "h1.yt-video-attribute-view-model__title";
+const ARTIST_NAME_SELECTOR = "h4.yt-video-attribute-view-model__subtitle";
 
 export default defineContentScript({
   // SPAでは最初に開いたページだけチェックされる
@@ -12,56 +16,75 @@ export default defineContentScript({
   cssInjectionMode: "ui",
   async main(ctx) {
     let ui: Awaited<ReturnType<typeof createShadowRootUi>> | null =
-      await createUi(location.href, ctx);
-
-    // 初回ページ読み込み時のonMountを実行
-    ui!.mount();
+      await handleLocationChange(window.location.href, ctx);
 
     // SPAはURLが変わってもContentScriptが再実行されないため、URLの変更を監視し都度onMountを実行する
     ctx.addEventListener(window, "wxt:locationchange", async ({ newUrl }) => {
       // 古いUIが残ったままになるのでアンマウント
       ui?.remove();
       if (newUrl.href.startsWith(YOUTUBE_WATCH_URL)) {
-        ui = await createUi(newUrl.href, ctx);
-        ui?.mount();
+        ui = await handleLocationChange(newUrl.href, ctx);
       }
     });
   },
 });
 
-async function createUi(url: string, ctx: ContentScriptContext) {
+async function handleLocationChange(url: string, ctx: ContentScriptContext) {
   // ページ表示直後はh1のテキストが空なので、1秒待機
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const title = document.getElementsByClassName(
-    "yt-video-attribute-view-model__title"
-  )[0]?.textContent;
-
-  // 動画詳細に音楽情報が記載されていなければ音楽動画でないとみなし中断
-  if (!title) {
+  // 動画情報セクションを取得
+  const root = document.querySelector(METADATA_SELECTOR);
+  if (!root) {
     return null;
   }
 
-  // backgroudの処理を実行
+  // 動画詳細に楽曲情報が記載されていなければ音楽動画でないとみなし中断
+  // 日本人アーティストでもアルファベット表記っぽいので、songstterの検索でも使えそう
+  const title = document.querySelector(SONG_TITLE_SELECTOR)?.textContent;
+  const artist = document.querySelector(ARTIST_NAME_SELECTOR)?.textContent;
+  if (!title || !artist) {
+    return null;
+  }
+
+  // backgroundの処理を実行
   // @ts-ignore
   const tablatures = await sendMessage("findTablatures", {
     title,
+    artist: artist,
     favoriteInstruments: getFavoriteInstruments(),
   });
 
-  return await createShadowRootUi(ctx, {
+  const hasTablatures = tablatures.length > 0;
+
+  const ui = await createShadowRootUi(ctx, {
     // 識別子はケバブケースにしないとエラー
-    name: "tablature-search-notification",
-    position: "overlay",
-    anchor: "body",
+    name: "songstter-chrome-extension",
+    position: "inline",
+    anchor: root,
     onMount: (container) => {
-      return mount(Notification, {
+      return mount(App, {
         target: container,
-        props: { url, tablatures, title },
+        props: {
+          hasTablatures,
+          handleButtonClick: () => {
+            if (hasTablatures) {
+              window.open(
+                `https://www.songsterr.com/?pattern=${title}`,
+                "_blank"
+              );
+            } else {
+              alert("TAB譜作成機能は今後実装予定です");
+            }
+          },
+        },
       });
     },
     onRemove: (app) => {
       if (app) unmount(app);
     },
   });
+
+  ui.mount();
+  return ui;
 }
