@@ -22,6 +22,7 @@ export default defineConfig({
     ],
     // これがないとbackgroundもcorsに引っかかる
     host_permissions: ["https://www.songsterr.com/api/*"],
+    permissions: ["storage"],
   },
   vite: () => ({
     plugins: [tailwindcss()],
