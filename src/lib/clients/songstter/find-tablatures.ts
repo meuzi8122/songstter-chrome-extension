@@ -20,25 +20,25 @@ export async function findTablatures(
       instruments: [],
     };
 
-    // const instruments: string[] = record.tracks.map(
-    //   (track: any) => track.instrument
-    // );
+    const instruments: string[] = record.tracks.map(
+      (track: any) => track.instrument
+    );
 
-    // const isTargetInstrument = (keyword: Instrument) =>
-    //   favoriteInstruments.includes(keyword) &&
-    //   instruments.some((instrument) => instrument.includes(keyword));
+    const isTargetInstrument = (keyword: Instrument) =>
+      favoriteInstruments.includes(keyword) &&
+      instruments.some((instrument) => instrument.includes(keyword));
 
-    // if (isTargetInstrument("Guitar")) {
-    //   tablature.instruments.push("Guitar");
-    // }
+    if (isTargetInstrument("Guitar")) {
+      tablature.instruments.push("Guitar");
+    }
 
-    // if (isTargetInstrument("Bass")) {
-    //   tablature.instruments.push("Bass");
-    // }
+    if (isTargetInstrument("Bass")) {
+      tablature.instruments.push("Bass");
+    }
 
-    // if (tablature.instruments.length === 0) {
-    //   return [];
-    // }
+    if (tablature.instruments.length === 0) {
+      return [];
+    }
 
     return tablature;
   });
