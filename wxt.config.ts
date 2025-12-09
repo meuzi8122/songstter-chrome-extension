@@ -10,6 +10,7 @@ export default defineConfig({
     startUrls: ["https://www.youtube.com/watch?v=Fve_lHIPa-I"],
   },
   manifest: {
+    name: "Songstter Chrome Extension",
     background: {
       service_worker: "background.ts",
     },
