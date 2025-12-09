@@ -2,7 +2,7 @@
   import {
     getFavoriteInstruments,
     setFavoriteInstruments,
-  } from "@/lib/utils/local-storage";
+  } from "@/lib/utils/localstorage";
 
   // onMountで初期化するとeffectが呼ばれてしまうのでダメ
   let favoriteInstruments = $state(getFavoriteInstruments());
