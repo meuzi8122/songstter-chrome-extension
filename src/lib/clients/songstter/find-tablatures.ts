@@ -1,5 +1,5 @@
 import { fetchSongstterApi } from "./api";
-import { Instrument, Tablature } from "./tablature";
+import type { Instrument, Tablature } from "./tablature";
 
 export async function findTablatures(
   pattern: string,

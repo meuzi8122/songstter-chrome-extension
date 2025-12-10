@@ -1,6 +1,6 @@
 import { findTablatures } from "@/lib/clients/songstter/find-tablatures";
-import { Instrument } from "@/lib/clients/songstter/tablature";
 import { onMessage } from "@/lib/utils/messaging";
+import type { Instrument } from "@/lib/clients/songstter/tablature";
 
 export default defineBackground(() => {
   onMessage(
