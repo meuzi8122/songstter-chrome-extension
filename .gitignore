@@ -17,10 +17,6 @@ web-ext.config.ts
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# 開発環境で使用するchromeプロファイルディレクトリ
+.dev-profile
