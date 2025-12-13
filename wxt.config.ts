@@ -8,7 +8,9 @@ export default defineConfig({
   modules: ["@wxt-dev/module-svelte"],
   runner: {
     // bun run devでブラウザを立ち上げた時に開くサイトのURL
-    startUrls: ["https://www.youtube.com/watch?v=Fve_lHIPa-I"],
+    startUrls: [
+      "https://www.youtube.com/watch?v=YTNf8kYhnhc&list=RDYTNf8kYhnhc&start_radio=1",
+    ],
     // cookieを永続化するため開発環境用の永続的なchromeプロファイルを作成
     chromiumArgs: [`--user-data-dir=${path.resolve(".dev-profile")}`],
   },

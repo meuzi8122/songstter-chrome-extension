@@ -53,6 +53,6 @@ export default defineBackground(() => {
       };
     }
 
-    return { success: true };
+    return { success: true, message: "TAB譜の作成を開始しました。" };
   });
 });

@@ -73,15 +73,17 @@ async function handleLocationChange(url: string, ctx: ContentScriptContext) {
                 `https://www.songsterr.com/?pattern=${title}`,
                 "_blank"
               );
-            } else {
-              const { success, message } = await sendMessage(
-                "createTablature",
-                url.split("v=")[1]
-              );
-              if (!success) {
-                alert(message);
-              }
+              return;
             }
+
+            const videoId = new URL(url).searchParams.get("v");
+            if (!videoId) {
+              alert("動画IDの取得に失敗しました。");
+              return;
+            }
+
+            const { message } = await sendMessage("createTablature", videoId);
+            alert(message);
           },
         },
       });
