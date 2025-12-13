@@ -67,16 +67,20 @@ async function handleLocationChange(url: string, ctx: ContentScriptContext) {
         target: container,
         props: {
           hasTablatures,
-          handleButtonClick: () => {
+          handleButtonClick: async () => {
             if (hasTablatures) {
               window.open(
                 `https://www.songsterr.com/?pattern=${title}`,
                 "_blank"
               );
             } else {
-              navigator.clipboard.writeText(url);
-              alert("動画URLをクリップボードにコピーしました");
-              window.open("https://www.songsterr.com/new", "_blank");
+              const { success, message } = await sendMessage(
+                "createTablature",
+                url.split("v=")[1]
+              );
+              if (!success) {
+                alert(message);
+              }
             }
           },
         },
